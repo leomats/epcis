@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FasTnT.UnitTest.Parsers.XML
 {
     [TestClass]
-    public class WhenParsingSoapGetStandardVersionRequest : XmlParserTestBase
+    public class WhenParsingSoapGetStandardVersionRequest : XmlQueryParserTestBase
     {
         public override void Given()
         {

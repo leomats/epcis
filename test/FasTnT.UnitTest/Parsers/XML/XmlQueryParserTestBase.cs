@@ -4,7 +4,7 @@ using System.IO;
 
 namespace FasTnT.UnitTest.Parsers.XML
 {
-    public abstract class XmlParserTestBase : TestBase
+    public abstract class XmlQueryParserTestBase : TestBase
     {
         public MemoryStream PollStream { get; set; }
         public IQueryRequest Result { get; set; }
@@ -22,5 +22,5 @@ namespace FasTnT.UnitTest.Parsers.XML
             sw.Flush();
             PollStream.Seek(0, SeekOrigin.Begin);
         }
-    }
+    } 
 }

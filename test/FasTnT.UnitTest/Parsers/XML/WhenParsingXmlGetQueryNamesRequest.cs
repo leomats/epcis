@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FasTnT.UnitTest.Parsers.XML
 {
     [TestClass]
-    public class WhenParsingXmlGetQueryNamesRequest : XmlParserTestBase
+    public class WhenParsingXmlGetQueryNamesRequest : XmlQueryParserTestBase
     {
         public override void Given()
         {
