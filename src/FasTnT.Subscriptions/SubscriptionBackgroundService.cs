@@ -29,7 +29,6 @@ namespace FasTnT.Subscriptions
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
             await Initialize(cancellationToken);
-            cancellationToken.ThrowIfCancellationRequested();
 
             while (!cancellationToken.IsCancellationRequested)
             {

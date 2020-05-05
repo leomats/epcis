@@ -17,8 +17,10 @@ namespace FasTnT.Parsers.Xml.Capture
 {
     public class XmlRequestParser
     {
-        private const string QueryBodyPath = "EPCISBody/query:QueryResults/resultsBody";
-        private const string CaptureBodyPath = "EPCISBody";
+        private const string EventCallbackBodyPath = "EPCISBody/query:QueryResults/resultsBody/EventList";
+        private const string EventCaptureBodyPath = "EPCISBody/EventList";
+        private const string MasterdataBodyPath = "EPCISBody/VocabularyList";
+        private const string MasterdataHeaderPath = "EPCISHeader/extension/EPCISMasterData/VocabularyList";
 
         public async Task<ICaptureRequest> Read(Stream input, CancellationToken cancellationToken)
         {
@@ -31,7 +33,7 @@ namespace FasTnT.Parsers.Xml.Capture
             }
             else
             {
-                request = ParseRequest(document.Root, CaptureBodyPath);
+                request = ParseCaptureRequest(document);
             }
 
             return request != default 
@@ -39,17 +41,32 @@ namespace FasTnT.Parsers.Xml.Capture
                     : throw new Exception($"Document with root '{document.Root.Name}' is not expected here.");
         }
 
+        private EpcisRequest ParseCaptureRequest(XDocument document)
+        {
+            var type = document.Root.Element("EPCISBody").Elements().First();
+
+            switch (type.Name.LocalName)
+            {
+                case "VocabularyList":
+                    return ParseRequest(document.Root, EventCaptureBodyPath, MasterdataBodyPath);
+                case "EventList":
+                    return ParseRequest(document.Root, EventCaptureBodyPath, MasterdataHeaderPath);
+                default:
+                    throw new Exception($"Element '{type.Name.LocalName}' not expected in this context.");
+            }
+        }
+
         private EpcisRequest ParseSubscriptionCallback(XDocument document)
         {
             var callback = document.Root.Element("EPCISBody").Elements().First();
-            var request = ParseRequest(document.Root, QueryBodyPath);
+            var request = ParseRequest(document.Root, EventCallbackBodyPath, MasterdataHeaderPath);
 
             request.SubscriptionCallback = ParseCallback(callback);
 
-            return request ?? throw new Exception($"Document with root '{document.Root.Name}' is not expected here.");
+            return request ?? throw new Exception($"Document with root '{document.Root.Name}' not expected in this context.");
         }
 
-        private EpcisRequest ParseRequest(XElement root, string dataRootPath)
+        private EpcisRequest ParseRequest(XElement root, string eventRootPath, string masterdataRootPath)
         {
             return new EpcisRequest
             {
@@ -57,8 +74,8 @@ namespace FasTnT.Parsers.Xml.Capture
                 DocumentTime = DateTime.Parse(root.Attribute("creationDate").Value, CultureInfo.InvariantCulture),
                 SchemaVersion = root.Attribute("schemaVersion").Value,
                 CustomFields = XmlCustomFieldParser.ParseCustomFields(root.XPathSelectElement("EPCISHeader"), FieldType.HeaderExtension),
-                EventList = XmlEventsParser.ParseEvents(root.XPathSelectElement($"{dataRootPath}/EventList", EpcisNamespaces.Manager)?.Elements()?.ToArray() ?? Array.Empty<XElement>()),
-                MasterdataList = XmlMasterDataParser.ParseMasterDatas(root.XPathSelectElement($"{dataRootPath}/VocabularyList", EpcisNamespaces.Manager)?.Elements("Vocabulary") ?? Array.Empty<XElement>())
+                EventList = XmlEventsParser.ParseEvents(root.XPathSelectElement(eventRootPath, EpcisNamespaces.Manager)?.Elements()?.ToArray() ?? Array.Empty<XElement>()),
+                MasterdataList = XmlMasterDataParser.ParseMasterDatas(root.XPathSelectElement(masterdataRootPath, EpcisNamespaces.Manager)?.Elements("Vocabulary") ?? Array.Empty<XElement>())
             };
         }
 

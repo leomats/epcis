@@ -37,6 +37,9 @@
     <None Update="FormattersTests\XmlFormatter\files\requests\xml\valid_event_1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Files\XML\FullCapture.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

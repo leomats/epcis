@@ -5,7 +5,7 @@ using Mapping = System.Collections.Generic.Dictionary<FasTnT.Model.Utils.Enumera
 
 namespace FasTnT.Data.PostgreSql.DataRetrieval
 {
-    public static class ModelExtensions
+    internal static class ModelExtensions
     {
         private static readonly Mapping FilterOperators = new Mapping{
             { FilterComparator.Equal, "=" },
