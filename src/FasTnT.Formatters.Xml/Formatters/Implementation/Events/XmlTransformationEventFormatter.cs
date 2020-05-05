@@ -1,6 +1,7 @@
 ﻿using FasTnT.Model.Enums;
 using FasTnT.Model.Events;
 using FasTnT.Parsers.Xml.Formatters.Implementation;
+using FasTnT.Parsers.Xml.Utils;
 using System.Xml.Linq;
 
 namespace FasTnT.Formatters.Xml.Formatters.Events
@@ -33,10 +34,7 @@ namespace FasTnT.Formatters.Xml.Formatters.Events
             var outputQuantity = new XElement("outputQuantityList", XmlEventFormatter.FormatEpcQuantity(evt, EpcType.OutputQuantity));
             var outputEpcList = new XElement("outputEPCList", XmlEventFormatter.FormatEpcList(evt, EpcType.OutputEpc));
 
-            if (inputEpcList.HasElements) Root.Add(inputEpcList);
-            if (inputQuantity.HasElements) Root.Add(inputQuantity);
-            if (outputEpcList.HasElements) Root.Add(outputEpcList);
-            if (outputQuantity.HasElements) Root.Add(outputQuantity);
+            Root.AddNotEmpties(inputEpcList, inputQuantity, outputEpcList, outputQuantity);
         }
     }
 }

@@ -27,8 +27,7 @@ namespace FasTnT.Formatters.Xml.Formatters.Events
             var quantityList = new XElement("quantityList", XmlEventFormatter.FormatEpcQuantity(evt, EpcType.Quantity));
 
             Root.Add(new XElement("epcList", XmlEventFormatter.FormatEpcList(evt, EpcType.List)));
-            if (inputEpcList.HasElements) Root.Add(inputEpcList);
-            if (quantityList.HasElements) Extension.Add(quantityList);
+            Root.AddNotEmpties(inputEpcList, quantityList);
         }
 
         protected virtual void AddAction(EpcisEvent evt)

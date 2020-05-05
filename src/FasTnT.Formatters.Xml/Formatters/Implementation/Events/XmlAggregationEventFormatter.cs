@@ -1,6 +1,7 @@
 ﻿using FasTnT.Model.Enums;
 using FasTnT.Model.Events;
 using FasTnT.Parsers.Xml.Formatters.Implementation;
+using FasTnT.Parsers.Xml.Utils;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -31,6 +32,7 @@ namespace FasTnT.Formatters.Xml.Formatters.Events
         private void AddParentId(EpcisEvent evt)
         {
             var parentId = evt.Epcs.SingleOrDefault(e => e.Type == EpcType.ParentId);
+
             if (parentId != null)
             {
                 Root.Add(new XElement("parentID", parentId.Id));
@@ -42,7 +44,7 @@ namespace FasTnT.Formatters.Xml.Formatters.Events
             var childQuantity = new XElement("childQuantityList", XmlEventFormatter.FormatEpcQuantity(evt, EpcType.ChildQuantity));
 
             Root.Add(new XElement("childEPCs", XmlEventFormatter.FormatEpcList(evt, EpcType.ChildEpc)));
-            if (childQuantity.HasElements) Extension.Add(childQuantity);
+            Extension.AddNotEmpties(childQuantity);
         }
     }
 }

@@ -28,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Files\XML\Capture_Transformation.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="FormattersTests\XmlFormatter\files\requests\xml\invalid_event_1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -112,6 +112,11 @@ namespace FasTnT.Parsers.Xml.Utils
             }
         }
 
+        public static void AddNotEmpties(this XElement root, params XElement[] elements)
+        {
+            root.Add(elements.Where(e => e != null && !e.IsEmpty));
+        }
+
         public static void AddIfNotNull(this XElement root, XElement element)
         {
             if (element != default(XElement) && !element.IsEmpty)
