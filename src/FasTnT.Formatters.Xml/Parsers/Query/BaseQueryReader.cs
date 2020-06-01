@@ -9,7 +9,7 @@ namespace FasTnT.Parsers.Xml
 {
     public class BaseQueryReader<T> : IQueryReader where T : class, IQueryRequestProvider
     {
-        private static XmlSerializer _serializer = new XmlSerializer(typeof(T));
+        private static readonly XmlSerializer _serializer = new XmlSerializer(typeof(T));
         public Task<IQueryRequest> ReadAsync(Stream input, CancellationToken cancellationToken)
         {
             return Task.Run(() =>

@@ -8,13 +8,13 @@ namespace FasTnT.IntegrationTests.Formatters.XML
 {
     public abstract class XmlFormatterTestBase : TestBase
     {
-        public XmlCommandFormatter Formatter { get; set; }
+        //public XmlCommandFormatter Formatter { get; set; }
         public IEpcisResponse Response { get; set; }
         public string Formatted { get; set; }
 
         public override void Given()
         {
-            Formatter = new XmlCommandFormatter();
+            //Formatter = new XmlCommandFormatter();
         }
 
         public override void When()

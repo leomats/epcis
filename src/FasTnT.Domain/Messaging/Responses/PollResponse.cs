@@ -1,4 +1,5 @@
-﻿using FasTnT.Model.Events;
+﻿using FasTnT.Domain.Commands;
+using FasTnT.Model.Events;
 using FasTnT.Model.MasterDatas;
 using System.Collections.Generic;
 
@@ -10,5 +11,10 @@ namespace FasTnT.Commands.Responses
         public string SubscriptionId { get; set; }
         public IList<EpcisEvent> EventList { get; set; } = new List<EpcisEvent>();
         public IList<EpcisMasterData> MasterdataList { get; set; } = new List<EpcisMasterData>();
+
+        public void Accept(IResponseVisitor responseFormatter)
+        {
+            responseFormatter.Visit(this);
+        }
     }
 }

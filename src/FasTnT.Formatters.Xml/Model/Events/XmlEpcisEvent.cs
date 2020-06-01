@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FasTnT.Model.Events;
+using System;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -14,5 +15,16 @@ namespace FasTnT.Formatters.Xml.Model.Events
         public string EventTimeZoneOffset { get; set; }
         [XmlElement(ElementName = "baseExtension")]
         public BaseEpcisEventExtensionV1 BaseExtension { get; set; }
+
+        public virtual EpcisEvent GetEpcisEvent()
+        {
+            var epcisEvent = new EpcisEvent
+            {
+                EventTime = EventDate,
+                EventTimeZoneOffset = new TimeZoneOffset { Representation = EventTimeZoneOffset },
+            };
+
+            return epcisEvent;
+        }
     }
 }

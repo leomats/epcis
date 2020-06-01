@@ -3,22 +3,41 @@ using FasTnT.Formatters.Xml.Model.Queries;
 
 namespace FasTnT.Formatters.Xml.Formatters
 {
-    public class XmlResponseFormatter : BaseResponseFormatter<XmlQueryDocument>
+    public class XmlResponseFormatter : BaseResponseFormatter<XmlResponseDocument>
     {
-        public override XmlQueryDocument FormatResponse(IEpcisResponse response)
+        public override void Visit(ExceptionResponse response)
         {
-            return new XmlQueryDocument
-            {
-                Body = new XmlQueryBody
-                {
-                    Query = GetBodyQuery()
-                }
-            };
+            throw new System.NotImplementedException();
         }
 
-        private EpcisXmlQuery GetBodyQuery()
+        public override void Visit(GetQueryNamesResponse response)
         {
-            return new GetStandardVersion { };
+            throw new System.NotImplementedException();
+        }
+
+        public override void Visit(GetStandardVersionResponse response)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Visit(GetSubscriptionIdsResponse response)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Visit(GetVendorVersionResponse response)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Visit(PollResponse response)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Visit(EmptyResponse response)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FasTnT.Commands.Requests;
 using FasTnT.Domain.Commands;
 using FasTnT.Model;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace FasTnT.Formatters.Xml.Model.Events
@@ -18,7 +19,7 @@ namespace FasTnT.Formatters.Xml.Model.Events
             {
                 Request = new EpcisRequest
                 {
-                    EventList = null,// TODO
+                    EventList = Body.GetEpcisEventList().ToList()
                 }
             };
         }

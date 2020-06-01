@@ -2,7 +2,9 @@
 using FasTnT.Formatters.Xml.Model.Events.Object;
 using FasTnT.Formatters.Xml.Model.Events.Quantity;
 using FasTnT.Formatters.Xml.Model.Events.Transaction;
+using FasTnT.Model.Events;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace FasTnT.Formatters.Xml.Model.Events
@@ -17,5 +19,10 @@ namespace FasTnT.Formatters.Xml.Model.Events
         [XmlArrayItem("TransactionEvent", typeof(TransactionEvent))]
         [XmlArrayItem("AggregationEvent", typeof(AggregationEvent))]
         public List<BaseEpcisEvent> EventList { get; set; }
+
+        public IEnumerable<EpcisEvent> GetEpcisEventList()
+        {
+            return EventList.Select(evt => evt.GetEpcisEvent());
+        }
     }
 }
