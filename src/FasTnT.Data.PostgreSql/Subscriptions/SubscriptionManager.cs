@@ -48,7 +48,7 @@ namespace FasTnT.Data.PostgreSql.Subscriptions
             await _connection.BulkInsertAsync(SubscriptionRequests.StoreParameterValue, values, cancellationToken: cancellationToken);
         }
 
-        public async Task AcknowledgePendingRequests(int subscriptionId, int[] requestIds, CancellationToken cancellationToken)
+        public async Task AcknowledgePendingRequestsAsync(int subscriptionId, int[] requestIds, CancellationToken cancellationToken)
         {
             var command = new CommandDefinition(SubscriptionRequests.AcknowledgePendingRequests, new { subscriptionId, requestIds }, cancellationToken: cancellationToken);
             await _connection.ExecuteAsync(command);
@@ -78,7 +78,7 @@ namespace FasTnT.Data.PostgreSql.Subscriptions
             return subscription.SingleOrDefault();
         }
 
-        public async Task RegisterSubscriptionTrigger(int subscriptionId, SubscriptionResult result, string reason, CancellationToken cancellationToken)
+        public async Task RegisterSubscriptionTriggerAsync(int subscriptionId, SubscriptionResult result, string reason, CancellationToken cancellationToken)
         {
             var command = new CommandDefinition(SubscriptionRequests.RegisterTrigger, new { subscriptionId, result, reason }, cancellationToken: cancellationToken);
 

@@ -30,7 +30,7 @@ namespace FasTnT.Commands.Requests
                 var query = _queries.FirstOrDefault(q => q.Name == request.QueryName)
                             ?? throw new EpcisException(ExceptionType.NoSuchNameException, $"Query with name '{request.QueryName}' is not implemented");
                 
-                return await query.Handle(request.Parameters, cancellationToken);
+                return await query.HandleAsync(request.Parameters, cancellationToken);
             }
         }
     }

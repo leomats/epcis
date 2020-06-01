@@ -1,4 +1,5 @@
 ﻿using FasTnT.Commands.Responses;
+using FasTnT.Domain.Commands;
 using FasTnT.Parsers.Xml;
 using System;
 using System.Net;
@@ -11,9 +12,16 @@ namespace FasTnT.Subscriptions
 {
     public class SubscriptionResultSender
     {
-        public async Task Send(string destination, IEpcisResponse epcisResponse, CancellationToken cancellationToken)
+        private readonly Func<string, ICommandFormatter> _formatterFactory;
+
+        public SubscriptionResultSender(Func<string, ICommandFormatter> formatterFactory)
         {
-            var formatter = new XmlCommandFormatter();
+            _formatterFactory = formatterFactory;
+        }
+
+        public async Task SendAsync(string destination, IEpcisResponse epcisResponse, string format, CancellationToken cancellationToken)
+        {
+            var formatter = _formatterFactory(format);
             var request = WebRequest.CreateHttp(destination);
             request.Method = "POST";
             request.ContentType = formatter.ContentType;

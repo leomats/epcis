@@ -27,7 +27,7 @@ namespace FasTnT.UnitTest.Handlers
             Handler = new PollHandler(new [] { Query.Object });
 
             Query.SetupGet(x => x.Name).Returns("ExampleQuery");
-            Query.Setup(x => x.Handle(It.IsAny<QueryParameter[]>(), CancellationToken)).Returns(Task.FromResult(new PollResponse()));
+            Query.Setup(x => x.HandleAsync(It.IsAny<QueryParameter[]>(), CancellationToken)).Returns(Task.FromResult(new PollResponse()));
         }
 
         public override void When()
@@ -38,7 +38,7 @@ namespace FasTnT.UnitTest.Handlers
         [TestMethod]
         public void ItShouldCallTheCorrectQueryHandleMethod()
         {
-            Query.Verify(x => x.Handle(It.IsAny<QueryParameter[]>(), CancellationToken), Times.Once);
+            Query.Verify(x => x.HandleAsync(It.IsAny<QueryParameter[]>(), CancellationToken), Times.Once);
         }
 
         [TestMethod]

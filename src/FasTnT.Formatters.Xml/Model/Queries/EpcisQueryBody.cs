@@ -3,7 +3,7 @@
 namespace FasTnT.Formatters.Xml.Model.Queries
 {
     [XmlType("EPCISBody")]
-    public class EpcisQueryBody
+    public class XmlQueryBody
     {
         [XmlElement("GetQueryNames", typeof(GetQueryNames), Namespace = "urn:epcglobal:epcis-query:xsd:1")]
         [XmlElement("GetSubscriptionIDs", typeof(GetSubscriptionIds), Namespace = "urn:epcglobal:epcis-query:xsd:1")]

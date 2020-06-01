@@ -1,6 +1,6 @@
 ﻿using FasTnT.Commands.Responses;
 using FasTnT.Domain.Commands;
-using FasTnT.Formatters.Xml.Model.Queries;
+using FasTnT.Formatters.Xml.Model.Events;
 using FasTnT.Formatters.Xml.Parsers.Requests;
 using FasTnT.Parsers.Xml.Parsers.Query;
 using System;
@@ -10,20 +10,22 @@ using System.Threading.Tasks;
 
 namespace FasTnT.Parsers.Xml
 {
-    public class XmlCommandFormatter : ICommandFormatter
+    public class XmlCommandFormatter<TRequest, TQuery> : ICommandFormatter
+        where TRequest : class, ICaptureRequestProvider
+        where TQuery : class, IQueryRequestProvider
     {
         public string ContentType => "application/xml";
 
         public async Task<ICaptureRequest> ParseCapture(Stream input, CancellationToken cancellationToken)
         {
-            var requestParser = new XmlRequestParser();
+            var requestParser = new XmlRequestParser<TRequest>();
 
             return await requestParser.ReadRequest(input);
         }
 
         public async Task<IQueryRequest> ParseQuery(Stream input, CancellationToken cancellationToken)
         {
-            var queryParser = new XmlQueryParser<EpcisQueryDocument>();
+            var queryParser = new XmlQueryParser<TQuery>();
 
             return await queryParser.Read(input, cancellationToken);
         }

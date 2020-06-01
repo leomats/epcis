@@ -6,10 +6,10 @@ using System.Xml.Serialization;
 namespace FasTnT.Formatters.Xml.Model.Queries
 {
     [XmlRoot("EPCISQueryDocument", Namespace = "urn:epcglobal:epcis-query:xsd:1")]
-    public class EpcisQueryDocument : IQueryRequestProvider
+    public class XmlQueryDocument : IQueryRequestProvider
     {
         [XmlElement(ElementName = "EPCISBody", Namespace = "")]
-        public EpcisQueryBody Body { get; set; }
+        public XmlQueryBody Body { get; set; }
 
         public IQueryRequest GetEpcisRequest()
         {

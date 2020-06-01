@@ -15,5 +15,6 @@ namespace FasTnT.Domain.Model.Subscriptions
         public QuerySchedule Schedule { get; set; }
         public string Trigger { get; set; }
         public DateTime? InitialRecordTime { get; set; }
+        public string Format { get; set; } = "xml";
     }
 }

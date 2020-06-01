@@ -29,7 +29,7 @@ namespace FasTnT.UnitTest.Queries.SimpleMasterdataQuery
         {
             try
             {
-                Task.WaitAll(Query.Handle(Parameters.ToArray(), CancellationToken));
+                Task.WaitAll(Query.HandleAsync(Parameters.ToArray(), CancellationToken));
             }
             catch(Exception ex)
             {

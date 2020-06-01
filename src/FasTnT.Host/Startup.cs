@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication;
 using FasTnT.Domain;
 using FasTnT.Data.PostgreSql;
 using FasTnT.Subscriptions;
+using FasTnT.Formatters.Xml;
 
 namespace FasTnT.Host
 {
@@ -35,7 +36,8 @@ namespace FasTnT.Host
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddEpcisDomain()
+            services.AddXmlFormatters()
+                    .AddEpcisDomain()
                     .AddEpcisPersistence(Configuration.GetConnectionString("FasTnT.Database"))
                     .AddBackgroundSubscriptionService();
 

@@ -12,7 +12,7 @@ namespace FasTnT.Domain.Data
         Task<Subscription> GetById(string subscriptionId, CancellationToken cancellationToken);
         Task Delete(int subscriptionId, CancellationToken cancellationToken);
         Task<int[]> GetPendingRequestIds(int subscriptionId, CancellationToken cancellationToken);
-        Task AcknowledgePendingRequests(int subscriptionId, int[] pendingRequests, CancellationToken cancellationToken);
-        Task RegisterSubscriptionTrigger(int subscriptionId, SubscriptionResult success, string reason, CancellationToken cancellationToken);
+        Task AcknowledgePendingRequestsAsync(int subscriptionId, int[] pendingRequests, CancellationToken cancellationToken);
+        Task RegisterSubscriptionTriggerAsync(int subscriptionId, SubscriptionResult success, string reason, CancellationToken cancellationToken);
     }
 }

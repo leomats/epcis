@@ -36,7 +36,7 @@ namespace FasTnT.UnitTest.Handlers
         [TestMethod]
         public void ItShouldNotCallTheQueryHandleMethod()
         {
-            Query.Verify(x => x.Handle(It.IsAny<QueryParameter[]>(), CancellationToken), Times.Never);
+            Query.Verify(x => x.HandleAsync(It.IsAny<QueryParameter[]>(), CancellationToken), Times.Never);
         }
 
         [TestMethod]

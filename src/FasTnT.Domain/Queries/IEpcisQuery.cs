@@ -10,6 +10,6 @@ namespace FasTnT.Domain.Queries
         string Name { get; }
         bool AllowSubscription { get; }
 
-        Task<PollResponse> Handle(QueryParameter[] parameters, CancellationToken cancellationToken);
+        Task<PollResponse> HandleAsync(QueryParameter[] parameters, CancellationToken cancellationToken);
     }
 }
