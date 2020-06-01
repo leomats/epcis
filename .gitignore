@@ -49,4 +49,3 @@ test/*.dll
 packages
 *.suo
 *.user
-src/connectionStrings.shared.config

@@ -1,58 +1,30 @@
-﻿using FasTnT.Commands.Requests;
-using FasTnT.Domain.Commands;
-using FasTnT.Parsers.Xml.Query;
-using System;
-using System.Collections.Generic;
+﻿using FasTnT.Domain.Commands;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace FasTnT.Parsers.Xml.Parsers.Query
 {
-    public class XmlQueryParser
+    public class XmlQueryParser<T> where T : class, IQueryRequestProvider
     {
-        static IDictionary<string, Func<XElement, IQueryRequest>> Parsers = new Dictionary<string, Func<XElement, IQueryRequest>>
+        private readonly XmlSerializer _querySerializer;
+
+        public XmlQueryParser()
         {
-            { "GetQueryNames", element => new GetQueryNamesRequest() },
-            { "GetSubscriptionIDs", element => new GetSubscriptionIdsRequest { QueryName = element.Element("queryName").Value } },
-            { "GetStandardVersion", element => new GetStandardVersionRequest() },
-            { "GetVendorVersion", element => new GetVendorVersionRequest() },
-            { "Poll", element => XmlPollQueryParser.Parse(element) },
-            { "Subscribe", element => XmlSubscriptionParser.ParseSubscription(element) },
-            { "Unsubscribe", element => XmlSubscriptionParser.ParseUnsubscription(element) }
-        };
+            _querySerializer = new XmlSerializer(typeof(T));
+        }
 
         public virtual async Task<IQueryRequest> Read(Stream input, CancellationToken cancellationToken)
         {
-            var document = await XmlDocumentParser.Instance.Parse(input, cancellationToken);
+            var query = _querySerializer.Deserialize(input) as T;
 
-            if (document.Root.Name.LocalName == "EPCISQueryDocument")
-            {
-                var element = document.Root.Element("EPCISBody").Elements().FirstOrDefault();
-
-                return DispatchElement(element);
-            }
-
-            throw new Exception($"Element not expected: '{document.Root.Name.LocalName}'");
+            return await Task.FromResult(query.GetEpcisRequest());
         }
+    }
 
-        internal static IQueryRequest DispatchElement(XElement element)
-        {
-            if (element != null)
-            {
-                if (Parsers.TryGetValue(element.Name.LocalName, out Func<XElement, IQueryRequest> parseMethod))
-                {
-                    return parseMethod(element);
-                }
-                else
-                {
-                    throw new Exception($"Element not expected: '{element.Name.LocalName ?? null}'");
-                }
-            }
-
-            throw new Exception($"EPCISBody element must contain the query type.");
-        }
+    public interface IQueryRequestProvider
+    {
+        IQueryRequest GetEpcisRequest();
     }
 }
