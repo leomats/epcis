@@ -1,4 +1,5 @@
 ﻿using FasTnT.Domain.Commands;
+using FasTnT.Parsers.Xml;
 using FasTnT.Parsers.Xml.Parsers.Query;
 using System.IO;
 
@@ -11,7 +12,7 @@ namespace FasTnT.UnitTest.Parsers.Soap
 
         public override void When()
         {
-            Result = new SoapQueryParser().Read(PollStream, default).Result;
+            Result = new SoapQueryReader().ReadAsync(PollStream, default).Result;
         }
 
         public void SetRequest(string request)

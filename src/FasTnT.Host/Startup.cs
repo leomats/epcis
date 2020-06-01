@@ -39,7 +39,8 @@ namespace FasTnT.Host
             services.AddXmlFormatters()
                     .AddEpcisDomain()
                     .AddEpcisPersistence(Configuration.GetConnectionString("FasTnT.Database"))
-                    .AddBackgroundSubscriptionService();
+                    //.AddBackgroundSubscriptionService()
+                    ;
 
             services.AddControllers(ConfigureOptions)
                     .AddApplicationPart(typeof(Startup).Assembly)

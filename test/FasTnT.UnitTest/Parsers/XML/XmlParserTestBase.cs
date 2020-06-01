@@ -1,5 +1,5 @@
 ﻿using FasTnT.Domain.Commands;
-using FasTnT.Parsers.Xml.Parsers.Query;
+using FasTnT.Parsers.Xml;
 using System.IO;
 
 namespace FasTnT.UnitTest.Parsers.XML
@@ -11,7 +11,7 @@ namespace FasTnT.UnitTest.Parsers.XML
 
         public override void When()
         {
-            Result = new XmlQueryParser().Read(PollStream, default).Result;
+            Result = new XmlQueryReader().ReadAsync(PollStream, default).Result;
         }
 
         public void SetRequest(string request)

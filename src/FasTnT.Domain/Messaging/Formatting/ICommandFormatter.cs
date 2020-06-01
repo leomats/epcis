@@ -8,9 +8,10 @@ namespace FasTnT.Domain.Commands
     public interface ICommandFormatter
     {
         string ContentType { get; }
+        bool CanHandle(string format);
 
         Task<IQueryRequest> ParseQuery(Stream input, CancellationToken cancellationToken);
         Task<ICaptureRequest> ParseCapture(Stream input, CancellationToken cancellationToken);
-        Task WriteResponse(IEpcisResponse epcisResponse, Stream body, CancellationToken requestAborted);
+        Task WriteResponse(IEpcisResponse epcisResponse, Stream body, CancellationToken cancellationToken);
     }
 }

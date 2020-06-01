@@ -1,4 +1,6 @@
-﻿using System.Xml.Serialization;
+﻿using FasTnT.Commands.Requests;
+using FasTnT.Domain.Commands;
+using System.Xml.Serialization;
 
 namespace FasTnT.Formatters.Xml.Model.Queries
 {
@@ -7,5 +9,7 @@ namespace FasTnT.Formatters.Xml.Model.Queries
     {
         [XmlElement("queryName", Namespace = "")]
         public string QueryName { get; set; }
+
+        internal override IQueryRequest GetEpcisRequest() => new GetSubscriptionIdsRequest { QueryName = QueryName };
     }
 }

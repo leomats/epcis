@@ -1,6 +1,9 @@
 ﻿using MediatR;
 using FasTnT.Domain.Queries;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using FasTnT.Domain.Commands;
+using System.Linq;
 
 namespace FasTnT.Domain
 {
@@ -13,6 +16,13 @@ namespace FasTnT.Domain
             services.AddScoped<RequestContext>();
             services.AddScoped<IEpcisQuery, SimpleEventQuery>();
             services.AddScoped<IEpcisQuery, SimpleMasterdataQuery>();
+
+            services.AddScoped<Func<string, ICommandFormatter>>(svc => format =>
+            {
+                var formatters = svc.GetServices<ICommandFormatter>();
+
+                return formatters.FirstOrDefault(x => x.CanHandle(format));
+            });
 
             return services;
         }

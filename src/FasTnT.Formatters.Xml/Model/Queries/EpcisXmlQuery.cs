@@ -4,9 +4,6 @@ using System.Xml.Serialization;
 
 namespace FasTnT.Formatters.Xml.Model.Queries
 {
-
-    [XmlInclude(typeof(GetQueryNames))]
-    [XmlInclude(typeof(GetSubscriptionIds))]
     public abstract class EpcisXmlQuery
     {
         internal virtual IQueryRequest GetEpcisRequest()
